@@ -1,0 +1,43 @@
+class Stack<T> {
+  List<T> _items = [];
+
+  void push(T item) {
+    _items.add(item);
+  }
+
+  T pop() {
+    if (_items.isEmpty) {
+      throw StateError('Cannot pop from an empty stack');
+    }
+    return _items.removeLast();
+  }
+
+  bool get isEmpty => _items.isEmpty;
+}
+
+bool isBalancedParentheses(String input) {
+  Stack<String> stack = Stack<String>();
+
+  for (int i = 0; i < input.length; i++) {
+    if (input[i] == '(') {
+      stack.push('(');
+    } else if (input[i] == ')') {
+      if (stack.isEmpty) {
+        return false; // Unbalanced parentheses found
+      }
+      stack.pop();
+    }
+  }
+
+  return stack.isEmpty; // Parentheses are balanced if the stack is empty
+}
+
+void main() {
+  String expression1 = '(a + b)';
+  String expression2 = '(()())';
+  String expression3 = ')((';
+
+  print('$expression1 is balanced: ${isBalancedParentheses(expression1)}');
+  print('$expression2 is balanced: ${isBalancedParentheses(expression2)}');
+  print('$expression3 is balanced: ${isBalancedParentheses(expression3)}');
+}
